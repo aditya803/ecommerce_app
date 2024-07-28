@@ -79,38 +79,6 @@ service cloud.firestore {
 flutter run
 ```
 
-## Project Structure
-
-```plaintext
-lib/
-|-- models/
-|   |-- product.dart
-|   |-- user.dart
-|
-|-- providers/
-|   |-- auth_provider.dart
-|   |-- product_provider.dart
-|
-|-- repos/
-|   |-- auth_repository.dart
-|   |-- product_repository.dart
-|
-|-- screens/
-|   |-- auth/
-|   |   |-- login_screen.dart
-|   |   |-- signup_screen.dart
-|   |
-|   |-- home/
-|   |   |-- home_screen.dart
-|
-|-- widgets/
-|   |-- common_appbar.dart
-|   |-- product_item.dart
-|   |-- product_list.dart
-|
-|-- main.dart
-```
-
 ## Usage
 
 ### Authentication
