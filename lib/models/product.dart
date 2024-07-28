@@ -23,7 +23,7 @@ class Product {
       title: json['title'] as String? ?? 'Unknown Title',
       price: (json['price'] as num?)?.toDouble() ?? 0.0,
       discountPercentage: (json['discountPercentage'] as num?)?.toDouble() ?? 0.0,
-      image: json['image'] as String? ?? '',
+      image: json['thumbnail'] as String? ?? '',
     );
   }
 }

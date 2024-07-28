@@ -4,8 +4,14 @@ import '../../providers/product_provider.dart';
 import 'product_item.dart';
 
 class ProductList extends StatelessWidget {
+  final bool showDiscount;
+
+  ProductList({required this.showDiscount});
+
   @override
   Widget build(BuildContext context) {
+    //print("hello this is the discount $showDiscount");
+    print("product list: $showDiscount");
     final productProvider = Provider.of<ProductProvider>(context);
     final products = productProvider.products;
 
@@ -18,7 +24,7 @@ class ProductList extends StatelessWidget {
       ),
       padding: EdgeInsets.all(10.0),
       itemCount: products.length,
-      itemBuilder: (ctx, i) => ProductItem(products[i]),
+      itemBuilder: (ctx, i) => ProductItem(products[i], showDiscount),
     );
   }
 }

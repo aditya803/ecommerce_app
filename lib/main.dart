@@ -8,10 +8,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-import 'config/remote_config_service.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: FirebaseOptions(
@@ -21,18 +19,39 @@ void main() async {
     projectId: "ecommerce-app-955d5", //paste your project id here
   ),);
 
-  final FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.instance;
-  final RemoteConfigService remoteConfigService = RemoteConfigService(remoteConfig);
-  await remoteConfigService.initialize();
+  // final FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.instance;
+  // final RemoteConfigService remoteConfigService = RemoteConfigService(remoteConfig);
+  // await remoteConfigService.initialize();
+  final remoteConfig = FirebaseRemoteConfig.instance;
+  remoteConfig.setDefaults(const{
+    "displayDiscountedPrice":true,
+  });
 
-  runApp(MyApp(remoteConfigService: remoteConfigService));
+  runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  final RemoteConfigService remoteConfigService;
+class MyApp extends StatefulWidget {
+  // final RemoteConfigService remoteConfigService;
 
-  MyApp({required this.remoteConfigService});
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
 
+class _MyAppState extends State<MyApp> {
+  bool showDiscount= false;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    final remoteConfig = FirebaseRemoteConfig.instance;
+    showDiscount = remoteConfig.getBool("displayDiscountedPrice");
+    remoteConfig.onConfigUpdated.listen((RemoteConfigUpdate event)async{
+    await remoteConfig.activate();
+    setState(() {
+        showDiscount = remoteConfig.getBool("displayDiscountedPrice");
+      });
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -48,7 +67,7 @@ class MyApp extends StatelessWidget {
         title: 'E-commerce App',
         home: SignupScreen(),
         routes: {
-          HomeScreen.routeName: (ctx) => HomeScreen(remoteConfigService: remoteConfigService),
+          HomeScreen.routeName: (ctx) => HomeScreen(remoteConfigService: showDiscount),
           LoginScreen.routeName: (ctx) => LoginScreen(),
           SignupScreen.routeName: (ctx) => SignupScreen(),
         },
