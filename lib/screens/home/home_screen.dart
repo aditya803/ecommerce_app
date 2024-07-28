@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/extensions/common_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../config/remote_config_service.dart';
@@ -18,9 +19,8 @@ class HomeScreen extends StatelessWidget {
     productProvider.fetchProducts(); // Ensure products are fetched
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Products'),
-      ),
+      backgroundColor: Color(0xFFCED3DC),
+      appBar: CommonAppbar(isHomeScreen: true),
       body: ProductList(),
     );
   }
